@@ -21,6 +21,9 @@ const Signup = () =>{
             }
             const data = await response.json();
             console.log(data);
+            setName("");
+            setAge("");
+            setEmail("");
         }catch(err)
         {
             console.log(err);
