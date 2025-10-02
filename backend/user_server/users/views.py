@@ -16,6 +16,7 @@ def create_user(request):
             age=data['age']
         )
         return JsonResponse({'id' : user.id, 'message' : 'User created Successfully'})
+    return JsonResponse({'error' : 'Invalid Method'}, status=405)
     
 
 @csrf_exempt
