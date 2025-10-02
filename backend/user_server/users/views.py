@@ -77,7 +77,19 @@ def login_users(request):
         
     return JsonResponse({'error' : 'Invalid Method'}, status=405)
             
-    
+
+@csrf_exempt
+def logout_users(request):
+    if request.method == 'POST':
+        if 'access_token' in request.COOKIES:
+            response = JsonResponse({'message' : 'Logged out successfully'})
+            response.delete_cookie('access_token')
+            return response
+        else:
+            return JsonResponse({'error': 'User not logged in'}, status=401)
+        
+    return JsonResponse({'error':'Invalid method'}, status=405)
+
 
 @csrf_exempt
 def list_users(request):
