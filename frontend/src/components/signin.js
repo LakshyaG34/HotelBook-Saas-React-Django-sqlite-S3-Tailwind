@@ -8,7 +8,7 @@ const Signin = () =>{
     const handleFetch = async(e) =>{
         e.preventDefault();
         try{
-            const response = await fetch("http://127.0.0.1:8000/users/login/",{
+            const response = await fetch("http://localhost:8000/users/login/",{
             method : "POST",
             headers : {
                 "Content-type" : "application/json"
@@ -30,6 +30,9 @@ const Signin = () =>{
         {
             console.log(err);
         }
+    }
+    const handleLogout = async() =>{
+        
     }
     return(
         <form onSubmit={handleFetch}>

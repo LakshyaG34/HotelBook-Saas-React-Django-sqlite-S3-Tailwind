@@ -3,8 +3,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password, check_password
 import json
+
+from user_server import settings
 from .models import User
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.exceptions import TokenError
 
 @csrf_exempt
 def create_user(request):
@@ -66,7 +70,8 @@ def login_users(request):
                 key='access_token',
                 value=access_token,
                 httponly=True,
-                samesite='Lax',
+                secure=False,
+                samesite='lax',
             )
             return response
         
@@ -104,3 +109,17 @@ def get_users(request, user_id):
         return JsonResponse({'id': user.id, 'name': user.name, 'email': user.email})
     except User.DoesNotExist:
         return JsonResponse({'error' : 'User not found'}, status=404)
+    
+@csrf_exempt
+def me_view(request):
+    token=request.COOKIES.get("access_token")
+    if not token:
+        return JsonResponse({"user" : None}, status=401)
+    try:
+        access_token = AccessToken(token)
+        user_id = access_token["user_id"]
+        user = User.objects.get(id=user_id)
+        return JsonResponse({"user": {"email": user.email}})
+    except (TokenError, User.DoesNotExist):
+        return JsonResponse({"user": None}, status=401)
+
