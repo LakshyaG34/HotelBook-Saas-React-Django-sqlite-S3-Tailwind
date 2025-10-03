@@ -32,14 +32,34 @@ const Signin = () =>{
         }
     }
     const handleLogout = async() =>{
-        
+        try{
+            const response = await fetch("http://localhost:8000/users/logout/",{
+                method : "POST",
+                headers : {
+                "Content-type" : "application/json"
+                },
+                credentials : "include",
+            })
+            if(!response.ok)
+            {
+                throw new Error("Error Loging out")
+            }
+            alert("Logged out successfully");
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
     }
     return(
-        <form onSubmit={handleFetch}>
-            <input placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-            <input placeholder="Enter PW" value={password} onChange={(e) => setPassword(e.target.value)}/>
-            <button type = "submit">Submit</button>
-        </form>
+        <div>
+            <form onSubmit={handleFetch}>
+                <input placeholder="Enter Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input placeholder="Enter PW" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <button type = "submit">Submit</button>
+            </form>
+            <button type="button" onClick={handleLogout}>Logout</button>
+        </div>
     )
 }
 
