@@ -104,11 +104,12 @@ def list_users(request):
     
 @csrf_exempt
 def get_users(request, user_id):
-    try:
-        user = User.objects.get(id=user_id)
-        return JsonResponse({'id': user.id, 'name': user.name, 'email': user.email})
-    except User.DoesNotExist:
-        return JsonResponse({'error' : 'User not found'}, status=404)
+    if request.method == 'GET':
+        try:
+            user = User.objects.get(id=user_id)
+            return JsonResponse({'id': user.id, 'name': user.name, 'email': user.email})
+        except User.DoesNotExist:
+            return JsonResponse({'error' : 'User not found'}, status=404)
     
 @csrf_exempt
 def me_view(request):
