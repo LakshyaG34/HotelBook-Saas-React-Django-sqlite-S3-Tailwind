@@ -7,7 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 import boto3
 import time
 
-# Create your views here.
 
 @csrf_exempt
 def add_hotel(request):
@@ -62,6 +61,7 @@ def get_hotels(request):
         hotel = Hotel.objects.all().values()
         return JsonResponse(list(hotel), safe=False)
     
+@csrf_exempt   
 def get_hotel(request, hotel_id):
     if request.method == 'GET':
         try:

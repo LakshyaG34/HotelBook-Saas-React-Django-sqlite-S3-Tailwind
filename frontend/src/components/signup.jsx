@@ -31,7 +31,7 @@ const Signup = () =>{
     }
     return(
         <form onSubmit = {handleFetch}>
-            <input placeholder="Enter name" value = {name} onChange = {(e) => setName(e.target.value)}/>
+            <input placeholder="Enter name" value = {name} onChange = {(e) => setName(e.target.value)} className="border border-red-500 rounded-full px-1 py-1"/>
             <input placeholder="Enter Email" value = {email} onChange = {(e) => setEmail(e.target.value)}/>
             <input placeholder="Enter Age" value = {age} onChange = {(e) => setAge(e.target.value)}/>
             <button type ="submit">Submit</button>
