@@ -1,4 +1,4 @@
-import Card2 from "./card2"
+import Card2 from "./cards/card2"
 import img1 from "../assets/1.jpeg"
 import img2 from "../assets/2.jpeg"
 

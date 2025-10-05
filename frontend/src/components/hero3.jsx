@@ -1,4 +1,4 @@
-import Card1 from "./card1";
+import Card1 from "./cards/card1";
 
 const Hero3 = () =>{
     return(

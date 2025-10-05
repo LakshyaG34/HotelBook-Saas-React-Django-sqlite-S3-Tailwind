@@ -7,6 +7,8 @@ class Hotel(models.Model):
     rooms=models.IntegerField()
     description=models.CharField(max_length=255)
     hotelImage = models.CharField(max_length=255, blank=True, default="")
+    price = models.IntegerField()
+    landmark = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
