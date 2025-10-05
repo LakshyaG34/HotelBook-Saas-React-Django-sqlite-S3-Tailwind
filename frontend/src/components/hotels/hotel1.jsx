@@ -4,10 +4,8 @@ import HotelCard1 from "../cards/hotelCard1";
 
 const Hotel1 = () => {
   const city = useSelector((state) => state.city);
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
-  const [imgURL, setImgURL] = useState("");
+  const [hotels, setHotels] = useState([]);
+
   useEffect(() => {
     const handleHotel = async () => {
       try {
@@ -18,26 +16,33 @@ const Hotel1 = () => {
           throw new Error("Error in Fetching Hotel");
         }
         const data = await response.json();
-        setName(data[0].name);
-        setLocation(data[0].location);
-        setDescription(data[0].description);
-        setImgURL(data[0].hotelImage);
         console.log(data);
+        setHotels(data); // save data to state
       } catch (err) {
         console.log(err);
       }
     };
-    handleHotel()
+    if (city) handleHotel();
   }, [city]);
+
   return (
     <div className="w-full max-w-lg mx-auto">
-      <HotelCard1
-        name={name}
-        location={location}
-        description={description}
-        imgURL={imgURL}
-      />
+      {hotels.length > 0 && (
+        <HotelCard1
+          name={hotels[0].name}
+          location={hotels[0].location}
+          description={hotels[0].description}
+          rooms={hotels[0].rooms}
+          imgURL={hotels[0].hotelImage}
+          price={hotels[0].price}
+          landmark={hotels[0].landmark}
+          tags={hotels[0].tags}
+          taxes={hotels[0].taxes}
+          roomType={hotels[0].roomType}
+        />
+      )}
     </div>
   );
 };
+
 export default Hotel1;

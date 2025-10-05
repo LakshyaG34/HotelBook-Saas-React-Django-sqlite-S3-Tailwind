@@ -17,8 +17,13 @@ def add_hotel(request):
             rooms = int(request.POST.get("rooms"))
             description = request.POST.get("description")
             file = request.FILES.get("file")
+            price = request.POST.get("price")
+            landmark = request.POST.get("landmark")
+            tags = request.POST.get("tags")
+            taxes = request.POST.get("taxes")
+            roomType = request.POST.get("roomType")
 
-            if not name or not location or not rooms or not description:
+            if not name or not location or not rooms or not description or not price:
                 return JsonResponse({'err' : 'Missing fields'}, status=400)
             if Hotel.objects.filter(name=name).exists():
                 return JsonResponse({'err' : 'Hotel already exist'}, status=400)
@@ -46,7 +51,12 @@ def add_hotel(request):
                 location=location,
                 rooms=rooms,
                 description=description,
-                hotelImage=hotelImageUrl
+                hotelImage=hotelImageUrl,
+                price=price,
+                landmark=landmark,
+                tags=tags,
+                taxes=taxes,
+                roomType=roomType
             )
 
             return JsonResponse({'id':newHotel.id, 'message':'Hotel added successfully'}, status=201)
