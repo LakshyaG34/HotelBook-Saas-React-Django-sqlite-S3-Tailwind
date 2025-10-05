@@ -62,10 +62,13 @@ def get_hotels(request):
         return JsonResponse(list(hotel), safe=False)
     
 @csrf_exempt   
-def get_hotel(request, hotel_id):
+def get_hotel(request):
     if request.method == 'GET':
-        try:
-            hotel = Hotel.objects.get(id=hotel_id)
-            return JsonResponse({'id' : hotel.id, 'name' : hotel.name})
-        except Hotel.DoesNotExist:
-            return JsonResponse({'err' : 'The hotel does not exist'}, status=404)
+        location = request.GET.get('location')
+        if location:
+            hotels = Hotel.objects.filter(location__iexact=location).values()
+        else:
+            hotels = Hotel.objects.all().values()
+        return JsonResponse(list(hotels), safe=False)
+    return JsonResponse({'error' : 'Invalid Method'}, status=405)
+        

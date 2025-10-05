@@ -10,6 +10,7 @@ function App() {
 
   return (
     <div>
+      <div className='bg-blue-500 py-2'/>
       <div className='bg-blue-500'>
         <Navbar/>
         <Hero1/>
